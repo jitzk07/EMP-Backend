@@ -6,7 +6,25 @@ const authRoutes = require('./routes/authRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 
-app.use(cors());
+// ✅ CORS Configuration
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://emp-msk07.netlify.app" 
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cache-Control",
+      "Expires",
+      "Pragma"
+    ],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -16,6 +34,5 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/departments', departmentRoutes);
-
 
 module.exports = app;
